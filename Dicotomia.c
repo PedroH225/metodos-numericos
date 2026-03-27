@@ -86,21 +86,17 @@ int main()
     scanf("%f", &erro);
     getchar();
 
-    printf("\nValores recebidos: %.2f, %.2f, %.2f.", a, b, erro);
-
-    pausar();
-
+    // Verificar se no intervalo [A, B] existe zero de funcao
     int verificarIntervalo = funcaoX(a) * funcaoX(b) > 0;
 
     if (verificarIntervalo)
     {
-        printf("Função de zero não existe no intervalo [%.2f, %.2f];", a, b);
+        printf("\nFunção de zero não existe no intervalo [%.2f, %.2f];", a, b);
         free(multi);
         return 0;
     }
     
 
-    // Verificar se no intervalo [A, B] existe zero de funcao
 
     // Se existir encontar o valor de K
     // Realizar a chamada da função
