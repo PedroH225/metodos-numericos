@@ -13,6 +13,7 @@ Dicas:
 // Criar funcao para calcular a DICOTOMIA
 float CalculaValorK(float a, float b, float erro);
 float funcaoX(float ponto);
+float calcM(float a, float b);
 void ImprimirCabecalhoTabela();
 void ImprimirTabela(int iteracao, float a, float b, float m, float fA, float fB, float fM, char fAfM, char fMfB);
 void pausar();
@@ -70,8 +71,6 @@ int main()
 
     pausar();
 
-    printf("Resultado: %f %f %f\n", funcaoX(0), funcaoX(1), funcaoX(2));
-    pausar();
     // Receber os valores de
     // a, b, erro
     float a, b, erro;
@@ -102,17 +101,44 @@ int main()
     printf("\nValor de K: %.2f", valorK);
 
     pausar();
-    
+
     // Exibindo o cabecalho
     ImprimirCabecalhoTabela();
 
     // while (I <= K ... e os outros critérios de parada solicitados)
     //{
+    int I;
+    while (I <= valorK)
+    {
+        float m, fA, fB, fM;
+        char multFma, multFmb;
+
+        m = calcM(a,b);
+
+        fA = funcaoX(a);
+        fB = funcaoX(b);
+        fM = funcaoX(a / 2);
+
+        multFma = fM * fA < 0 ? '+' : '-';
+        
+        multFmb = fM * fB < 0 ? '+' : '-';
+
+        ImprimirTabela(I, a, b, m, fA, fB, fM, multFma, multFmb);
+
+        if (multFma = '+')
+        {
+            a = m;
+        } else if (multFmb = '+')
+        {
+            b = m;
+        }
+
+        I++;
+    }
 
     // Implementação da DICOTOMIA
 
     // Exibindo os valores na tabela
-    ImprimirTabela(1, 2, 3, 4, 5, 6, 7, '+', '-');
     //}
 
     pausar();
@@ -144,6 +170,10 @@ float funcaoX(float ponto)
     }
 
     return resultado;
+}
+
+float calcM(float a, float b) {
+    return (a + b) / 2;
 }
 
 // Imprimindo o cabecalho
