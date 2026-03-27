@@ -15,7 +15,8 @@ float CalculaValorK(float a, float b, float erro);
 float funcaoX(float ponto);
 float calcM(float a, float b);
 void ImprimirCabecalhoTabela();
-void ImprimirTabela(int iteracao, float a, float b, float m, float fA, float fB, float fM, char fAfM, char fMfB);
+void ImprimirTabela(int iteracao, float a, float b, float m, float fA, float fB, float fM, char fAfM, char fMfB, float modFm);
+void fecharTabela();
 void pausar();
 
 int grau;
@@ -110,25 +111,32 @@ int main()
     int I;
     while (I <= valorK)
     {
-        float m, fA, fB, fM;
+        float m, fA, fB, fM, modFm;
         char multFma, multFmb;
 
         m = calcM(a,b);
 
         fA = funcaoX(a);
         fB = funcaoX(b);
-        fM = funcaoX(a / 2);
+        fM = funcaoX(m);
 
-        multFma = fM * fA < 0 ? '+' : '-';
+        multFma = fM * fA > 0 ? '+' : '-';
         
-        multFmb = fM * fB < 0 ? '+' : '-';
+        multFmb = fM * fB > 0 ? '+' : '-';
 
-        ImprimirTabela(I, a, b, m, fA, fB, fM, multFma, multFmb);
+        modFm = fabs(fM);
 
-        if (multFma = '+')
+        ImprimirTabela(I, a, b, m, fA, fB, fM, multFma, multFmb, modFm);
+
+        if (modFm <= erro)
+        {
+            break;
+        }  
+
+        if (multFma == '+')
         {
             a = m;
-        } else if (multFmb = '+')
+        } else if (multFmb == '+')
         {
             b = m;
         }
@@ -136,10 +144,7 @@ int main()
         I++;
     }
 
-    // Implementação da DICOTOMIA
-
-    // Exibindo os valores na tabela
-    //}
+    fecharTabela();
 
     pausar();
 
@@ -185,15 +190,19 @@ void ImprimirCabecalhoTabela()
     printf("--+-----+-------+-------+-------+-------+-------+-------+-------+\n");
     */
     // Impressao do cabecalho
-    printf("I |\ta\t|\tb\t|\tm\t|\tf(a)\t|\tf(b)\t|\tf(m)\t|fa*fm\t|fm*fb\t|\n");
-    printf("--+-------------+---------------+---------------+---------------+---------------+---------------+-------+-------+\n");
+    printf("I |\ta\t|\tb\t|\tm\t|\tf(a)\t|\tf(b)\t|\tf(m)\t|fa*fm\t|fm*fb\t|    |fm|    \t|\n");
+    printf("--+-------------+---------------+---------------+---------------+---------------+---------------+-------+-------+---------------+\n");
+}
+
+void fecharTabela() {
+    printf("--+-------------+---------------+---------------+---------------+---------------+---------------+-------+-------+---------------+\n");
 }
 
 // Imprimindo a tabela com os valores
-void ImprimirTabela(int iteracao, float a, float b, float m, float fA, float fB, float fM, char fAfM, char fMfB)
+void ImprimirTabela(int iteracao, float a, float b, float m, float fA, float fB, float fM, char fAfM, char fMfB, float modFm)
 {
     // printf("%i |%.2f\t|%.2f\t|%.2f\t|%.2f\t|%.2f\t|%.2f\t|%c\t|%c\t|\n", iteracao, a, b, m, fA, fB, fM, fAfM, fMfB);
-    printf("%i |%.5f\t|%.5f\t|%.5f\t|%.5f\t|%.5f\t|%.5f\t|%c\t|%c\t|\n", iteracao, a, b, m, fA, fB, fM, fAfM, fMfB);
+    printf("%i |%.5f\t|%.5f\t|%.5f\t|%.5f\t|%.5f\t|%.5f\t|%c\t|%c\t|%.5f\t|\n", iteracao, a, b, m, fA, fB, fM, fAfM, fMfB, modFm);
 }
 
 void pausar() {
