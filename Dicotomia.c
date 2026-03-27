@@ -15,6 +15,7 @@ float CalculaValorK(float a, float b, float erro);
 float funcaoX(float ponto);
 void ImprimirCabecalhoTabela();
 void ImprimirTabela(int iteracao, float a, float b, float m, float fA, float fB, float fM, char fAfM, char fMfB);
+void pausar();
 
 int grau;
 float *multi = NULL; // Indice 0 a 6
@@ -54,10 +55,11 @@ int main()
     {
         printf("Informe o fator multiplicador de x^%i(%c): ", i, 65 + (grau - i));
         scanf("%f", &multi[i]);
+        getchar();
     }
 
     // Exibindo a funcao recebida
-    printf("A funcao recebida foi: ");
+    printf("\nA funcao recebida foi: ");
     for (i = grau; i >= 0; i--)
     {
         if (i == 0)
@@ -66,12 +68,10 @@ int main()
             printf("%.2fx^%i + ", multi[i], i);
     }
 
-    printf("\n\n");
-    getchar();
-    printf("\n\n");
+    pausar();
 
     printf("Resultado: %f %f %f\n", funcaoX(0), funcaoX(1), funcaoX(2));
-    getchar();
+    pausar();
     // Receber os valores de
     // a, b, erro
 
@@ -92,7 +92,7 @@ int main()
     ImprimirTabela(1, 2, 3, 4, 5, 6, 7, '+', '-');
     //}
 
-    getchar();
+    pausar();
 
     free(multi);
 }
@@ -141,4 +141,11 @@ void ImprimirTabela(int iteracao, float a, float b, float m, float fA, float fB,
 {
     // printf("%i |%.2f\t|%.2f\t|%.2f\t|%.2f\t|%.2f\t|%.2f\t|%c\t|%c\t|\n", iteracao, a, b, m, fA, fB, fM, fAfM, fMfB);
     printf("%i |%.5f\t|%.5f\t|%.5f\t|%.5f\t|%.5f\t|%.5f\t|%c\t|%c\t|\n", iteracao, a, b, m, fA, fB, fM, fAfM, fMfB);
+}
+
+void pausar() {
+    printf("\n\n");
+    printf("Pressione ENTER para continuar...");
+    getchar();
+    printf("\n\n");
 }
