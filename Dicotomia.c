@@ -44,6 +44,7 @@ scanf("%f", myVar+i);
 int main()
 {
     int i;
+    float funcaozero;
 
     // printf("%-9i|%8i\n", 19, 12);
 
@@ -88,11 +89,27 @@ int main()
     getchar();
 
     // Verificar se no intervalo [A, B] existe zero de funcao
-    int verificarIntervalo = funcaoX(a) * funcaoX(b) > 0;
+    float fAinicial = funcaoX(a);
+    float fBinicial = funcaoX(b);
 
+    if (fAinicial == 0)
+    {
+        printf("\nf(%.5f) é a raiz da função.", a);
+        free(multi);
+        return 0;
+    }
+        if (fBinicial == 0)
+    {
+        printf("\nf(%.5f) é a raiz da função.", b);
+        free(multi);
+        return 0;
+    }
+    
+    
+    int verificarIntervalo = fAinicial * fBinicial > 0;
     if (verificarIntervalo)
     {
-        printf("\nFunção de zero não existe no intervalo [%.2f, %.2f].", a, b);
+        printf("\nA raiz da função não existe no intervalo [%.2f, %.2f].", a, b);
         free(multi);
         return 0;
     }
@@ -108,6 +125,7 @@ int main()
     ImprimirCabecalhoTabela();
 
     int I = 1;
+    float fA, fb, fM;
     while (I <= valorK)
     {
         float m, fA, fB, fM, modBa, modFm;
@@ -129,6 +147,17 @@ int main()
 
         ImprimirTabela(I, a, b, m, fA, fB, fM, multFma, multFmb, modBa, modFm);
 
+        if (fA == 0) {
+            funcaozero = a;
+            break;
+        } else if (fB == 0) {
+            funcaozero = b;
+            break;
+        } else if (fM == 0) {
+            funcaozero = m;
+            break;
+        }
+
         if (multFma == '+')
         {
             a = m;
@@ -141,13 +170,19 @@ int main()
         {
             break;
         }
-
+        
         I++;
     }
 
     fecharTabela();
 
-    printf("O zero da função está entre [%.5f, %.5f]", a, b);
+    if (funcaozero) {
+    printf("\nf(%.5f) é a raiz da função.", funcaozero);
+
+    } else {
+    printf("\nA raiz da função está no intervalo [%.5f, %.5f]", a, b);
+    }
+    
 
     pausar();
 
