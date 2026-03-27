@@ -15,9 +15,10 @@ float CalculaValorK(float a, float b, float erro);
 float funcaoX(float ponto);
 float calcM(float a, float b);
 void ImprimirCabecalhoTabela();
-void ImprimirTabela(int iteracao, float a, float b, float m, float fA, float fB, float fM, char fAfM, char fMfB, float modFm);
+void ImprimirTabela(int iteracao, float a, float b, float m, float fA, float fB, float fM, char fAfM, char fMfB,float modBa, float modFm);
 void fecharTabela();
 void pausar();
+int verificarParada(float fm, float erro, float modBa);
 
 int grau;
 float *multi = NULL; // Indice 0 a 6
@@ -106,12 +107,10 @@ int main()
     // Exibindo o cabecalho
     ImprimirCabecalhoTabela();
 
-    // while (I <= K ... e os outros critérios de parada solicitados)
-    //{
-    int I;
+    int I = 1;
     while (I <= valorK)
     {
-        float m, fA, fB, fM, modFm;
+        float m, fA, fB, fM, modBa, modFm;
         char multFma, multFmb;
 
         m = calcM(a,b);
@@ -126,12 +125,9 @@ int main()
 
         modFm = fabs(fM);
 
-        ImprimirTabela(I, a, b, m, fA, fB, fM, multFma, multFmb, modFm);
+        modBa = fabs(b-a);
 
-        if (modFm <= erro)
-        {
-            break;
-        }  
+        ImprimirTabela(I, a, b, m, fA, fB, fM, multFma, multFmb, modBa, modFm);
 
         if (multFma == '+')
         {
@@ -141,10 +137,17 @@ int main()
             b = m;
         }
 
+        if (verificarParada(modFm, erro, modBa))
+        {
+            break;
+        }
+
         I++;
     }
 
     fecharTabela();
+
+    printf("O zero da função está entre [%.5f, %.5f]", a, b);
 
     pausar();
 
@@ -190,19 +193,19 @@ void ImprimirCabecalhoTabela()
     printf("--+-----+-------+-------+-------+-------+-------+-------+-------+\n");
     */
     // Impressao do cabecalho
-    printf("I |\ta\t|\tb\t|\tm\t|\tf(a)\t|\tf(b)\t|\tf(m)\t|fa*fm\t|fm*fb\t|    |fm|    \t|\n");
-    printf("--+-------------+---------------+---------------+---------------+---------------+---------------+-------+-------+---------------+\n");
+    printf("I |\ta\t|\tb\t|\tm\t|\tf(a)\t|\tf(b)\t|\tf(m)\t|fa*fm\t|fm*fb\t|    |b-a|    \t||    |fm|    \t|\n");
+    printf("--+-------------+---------------+---------------+---------------+---------------+---------------+-------+-------+---------------+---------------+\n");
 }
 
 void fecharTabela() {
-    printf("--+-------------+---------------+---------------+---------------+---------------+---------------+-------+-------+---------------+\n");
+    printf("--+-------------+---------------+---------------+---------------+---------------+---------------+-------+-------+---------------+---------------+\n");
 }
 
 // Imprimindo a tabela com os valores
-void ImprimirTabela(int iteracao, float a, float b, float m, float fA, float fB, float fM, char fAfM, char fMfB, float modFm)
+void ImprimirTabela(int iteracao, float a, float b, float m, float fA, float fB, float fM, char fAfM, char fMfB, float modBa, float modFm)
 {
     // printf("%i |%.2f\t|%.2f\t|%.2f\t|%.2f\t|%.2f\t|%.2f\t|%c\t|%c\t|\n", iteracao, a, b, m, fA, fB, fM, fAfM, fMfB);
-    printf("%i |%.5f\t|%.5f\t|%.5f\t|%.5f\t|%.5f\t|%.5f\t|%c\t|%c\t|%.5f\t|\n", iteracao, a, b, m, fA, fB, fM, fAfM, fMfB, modFm);
+    printf("%i |%.5f\t|%.5f\t|%.5f\t|%.5f\t|%.5f\t|%.5f\t|%c\t|%c\t|%.5f\t|%.5f\t|\n", iteracao, a, b, m, fA, fB, fM, fAfM, fMfB, modBa, modFm);
 }
 
 void pausar() {
@@ -210,4 +213,12 @@ void pausar() {
     printf("Pressione ENTER para continuar...");
     getchar();
     printf("\n\n");
+}
+
+int verificarParada(float modFm, float erro, float modBa) {
+    if (modFm <= erro || modBa <= erro)
+    {
+        return 1;
+    }   
+    return 0;
 }
