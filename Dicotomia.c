@@ -74,6 +74,31 @@ int main()
     pausar();
     // Receber os valores de
     // a, b, erro
+    float a, b, erro;
+
+    printf("Informe o intervalo A: ");
+    scanf("%f", &a);
+
+    printf("Informe o intervalo B: ");
+    scanf("%f", &b);
+
+    printf("Informe o erro: ");
+    scanf("%f", &erro);
+    getchar();
+
+    printf("\nValores recebidos: %.2f, %.2f, %.2f.", a, b, erro);
+
+    pausar();
+
+    int verificarIntervalo = funcaoX(a) * funcaoX(b) > 0;
+
+    if (verificarIntervalo)
+    {
+        printf("Função de zero não existe no intervalo [%.2f, %.2f];", a, b);
+        free(multi);
+        return 0;
+    }
+    
 
     // Verificar se no intervalo [A, B] existe zero de funcao
 
