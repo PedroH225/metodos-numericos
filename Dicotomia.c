@@ -91,16 +91,18 @@ int main()
 
     if (verificarIntervalo)
     {
-        printf("\nFunção de zero não existe no intervalo [%.2f, %.2f];", a, b);
+        printf("\nFunção de zero não existe no intervalo [%.2f, %.2f].", a, b);
         free(multi);
         return 0;
     }
     
+    // Calcular valor de K
+    float valorK = CalculaValorK(a, b, erro);
 
+    printf("\nValor de K: %.2f", valorK);
 
-    // Se existir encontar o valor de K
-    // Realizar a chamada da função
-
+    pausar();
+    
     // Exibindo o cabecalho
     ImprimirCabecalhoTabela();
 
