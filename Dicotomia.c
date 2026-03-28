@@ -125,10 +125,9 @@ int main()
     ImprimirCabecalhoTabela();
 
     int I = 1;
-    float fA, fb, fM;
     while (I <= valorK)
     {
-        float m, fA, fB, fM, modBa, modFm;
+        float fA, fB, fM, m, modBa, modFm;
         char multFma, multFmb;
 
         m = calcM(a,b);
@@ -137,31 +136,25 @@ int main()
         fB = funcaoX(b);
         fM = funcaoX(m);
 
-        multFma = fM * fA > 0 ? '+' : '-';
+        multFma = fM * fA >= 0 ? '+' : '-';
         
-        multFmb = fM * fB > 0 ? '+' : '-';
+        multFmb = fM * fB >= 0 ? '+' : '-';
 
         modFm = fabs(fM);
 
         modBa = fabs(b-a);
 
         ImprimirTabela(I, a, b, m, fA, fB, fM, multFma, multFmb, modBa, modFm);
-
-        if (fA == 0) {
-            funcaozero = a;
-            break;
-        } else if (fB == 0) {
-            funcaozero = b;
-            break;
-        } else if (fM == 0) {
+        
+        if (fM == 0) {
             funcaozero = m;
             break;
         }
 
-        if (multFma == '+')
+        if (fM * fA > 0)
         {
             a = m;
-        } else if (multFmb == '+')
+        } else 
         {
             b = m;
         }
@@ -251,9 +244,5 @@ void pausar() {
 }
 
 int verificarParada(float modFm, float erro, float modBa) {
-    if (modFm <= erro || modBa <= erro)
-    {
-        return 1;
-    }   
-    return 0;
+    return modFm <= erro || modBa <= erro;
 }
